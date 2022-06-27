@@ -1,3 +1,3 @@
 # Gehirn
 
-Python Tetris with a twist
+Python Tetris with a twist.
