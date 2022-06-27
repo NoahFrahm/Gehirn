@@ -214,6 +214,10 @@ def main(win, score):
         4:1200,
     }
 
+    level_multiplier = {
+
+    }
+
     # when true we burn the current piece permanently into our grid where it stands
     change_piece = False
 
@@ -224,6 +228,9 @@ def main(win, score):
     fall_time = 0
     fall_speed = 0.27
     piece_count = 0
+    lines_cleared = 0
+    level = 1
+    piece_point_val = 20
 
     while run:
         # print(score)
@@ -273,7 +280,13 @@ def main(win, score):
                 popcorn.append(key)
             popcorn.sort()
             popcorn.reverse()
-            score += point_key[len(popcorn)]
+
+            score += (point_key[len(popcorn)] * level)
+            score += (piece_point_val * level)
+            lines_cleared += len(popcorn)
+            level = lines_cleared // 5 + 1
+
+
             for pop_index in popcorn:
                 locked_positons.pop(pop_index)
             for _ in popcorn:
