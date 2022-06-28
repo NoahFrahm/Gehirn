@@ -1,6 +1,8 @@
+import os
 import random
 from typing import List, Tuple
 import pygame
+import neat
 
 screen_width = 800
 screen_height = 700
@@ -11,6 +13,9 @@ block_size = 30
 top_left_x = (screen_width - play_width) // 2
 top_left_y = screen_height - play_height
 
+# [0,1,1,0]
+# [1,1,0,0]
+# [0,0,0,0]
 
 t = [
     [(0,0),(1,0),(-1,0),(0,-1)],
@@ -134,7 +139,7 @@ class GamePiece:
         for point in shape:
             if point not in accepted_pos:
                 # for when we start off screen shape we are good so only > -1
-                if point[1] > -1:
+                if point[1] > -1 or point[0] < 0 or point[0] > 9:
                     return False
         return True  
 
@@ -184,14 +189,48 @@ def draw_window(surface, grid, score):
 
 
 def get_shape():
-    ind = random.randint(0,len(shapes))
+    ind = random.randint(0,len(shapes)-1)
     return GamePiece(5, 0, ind, shapes[ind])
 
+class MyPlayer:
+    def __init__(self) -> None:
+        self.locked_positions = [[(0,0,0) for _ in range(10)] for _ in range(20)]
+        self.grid = create_grid(self.locked_positions)
+        self.change_piece = False
+        self.run = True
+        self.clock = pygame.time.Clock()
+        self.piece_count = 0
+        self.lines_cleared = 0
+        self.level = 1
+        self.current_piece = get_shape()
+        self.next_piece = get_shape()
+        self.fall_time = 0
+        self.score = 0
 
-def main(win, score):
-    locked_positions = [[(0,0,0) for _ in range(10)] for _ in range(20)]
-    grid = create_grid(locked_positions)
-    # score = 0
+
+def main(genomes, config):
+    
+    win = pygame.display.set_mode((screen_width, screen_height))
+    pygame.display.set_caption('Tetris')
+
+    nets: List[neat.nn.FeedForwardNetwork] = []
+    ge: List[neat.DefaultGenome] = []
+    players: List[MyPlayer] = []
+
+    for _, g in genomes:
+        new_player = MyPlayer()
+        players.append(new_player)
+        net = neat.nn.FeedForwardNetwork.create(g, config)
+        nets.append(net)
+        g.fitness = 0
+        ge.append(g)
+    
+    print(len(ge))
+    print("players: " + str(len(players)))
+
+    fall_speed = 0.01
+    piece_point_val = 2
+    run = True
     point_key = {
         0:0,
         1:40,
@@ -200,103 +239,134 @@ def main(win, score):
         4:1200,
     }
 
-    level_multiplier = {
-
-    }
-
-    # when true we burn the current piece permanently into our grid where it stands
-    change_piece = False
-
-    run = True
-    current_piece = get_shape()
-    next_piece = get_shape()
-    clock = pygame.time.Clock()
-    fall_time = 0
-    fall_speed = 0.27
-    piece_count = 0
-    lines_cleared = 0
-    level = 1
-    piece_point_val = 20
-
     while run:
-        # print(score)
-        grid = create_grid(locked_positions)
-        fall_time += clock.get_rawtime()
-        clock.tick()
-
-        if fall_time / 1000 > fall_speed:
-            fall_time = 0
-            change_piece = current_piece.move("DOWN", grid)
-                
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-            
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    _ = current_piece.move("LEFT", grid)
-                elif event.key == pygame.K_RIGHT:
-                    _ = current_piece.move("RIGHT", grid)
-                elif event.key == pygame.K_DOWN:
-                    _ = current_piece.move("DOWN", grid)
-                elif event.key == pygame.K_UP:
-                    _ = current_piece.move("UP", grid)
-
-        for point in current_piece.current_shape:
-            x,y = point
-            if y > -1:
-                grid[y][x] = current_piece.color
-            
+        dead_nets = set()
+        if len(players) == 0:
+            run = False
+            break
         
-        if change_piece:
-            piece_count += 1
-            to_pop = {}
-            for pos in current_piece.current_shape:
-                if locked_positions[pos[1]][pos[0]] != (0,0,0):
+        for index, player in enumerate(players):
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
                     run = False
-                else:
-                    locked_positions[pos[1]][pos[0]] = current_piece.color
-                y = pos[1]
-                if (0,0,0) not in locked_positions[y]:
-                    to_pop[y] = 1
+                    break
+                break
 
-            popcorn = []
-            for key in to_pop.keys():
-                popcorn.append(key)
-            popcorn.sort()
-            popcorn.reverse()
+            ge[index].fitness += 1
+            player.grid = create_grid(player.locked_positions)
+            player.fall_time += player.clock.get_rawtime()
+            player.clock.tick()
 
-            score += (point_key[len(popcorn)] * level)
-            score += (piece_point_val * level)
-            lines_cleared += len(popcorn)
-            level = lines_cleared // 5 + 1
-
-
-            for pop_index in popcorn:
-                locked_positions.pop(pop_index)
-            for _ in popcorn:
-                locked_positions.insert(0, [(0,0,0) for _ in range(10)])
-
-            current_piece = next_piece
-            next_piece = get_shape()
-            change_piece = False
+            if player.fall_time / 1000 > fall_speed:
+                player.fall_time = 0
+                player.change_piece = player.current_piece.move("DOWN", player.grid)
             
-        draw_window(win, grid, score)
-        pygame.display.update()
-        # draw_next_shape(next_piece, win)
+            if not player.change_piece:
+                # locked_data = tuple(0 if player.locked_positions[y][x] == (0,0,0) else 1 for x in range(10) for y in range(20))
+                shape = player.current_piece.shape_id + 1
+                orientation = player.current_piece.orientation + 1
+                next_shape = player.next_piece.shape_id + 1
+                next_orientation = player.next_piece.orientation + 1
+                data = (shape, orientation, next_shape, next_orientation) #  + locked_data
+                
+                output = nets[index].activate(data)
+                max_val_index, maxi = 0, 0
+                for i, val in enumerate(output):
+                    if val > maxi:
+                        maxi = val
+                        max_val_index = i
+                if max_val_index == 0:
+                    _ = player.current_piece.move("LEFT", player.grid)
+                elif max_val_index == 1:
+                    _ = player.current_piece.move("RIGHT", player.grid)
+                elif max_val_index == 2:
+                    _ = player.current_piece.move("DOWN", player.grid)
+                elif max_val_index == 3:
+                    _ = player.current_piece.move("UP", player.grid)
 
-    return score
+            for point in player.current_piece.current_shape:
+                x,y = point
+                if y > -1:
+                    player.grid[y][x] = player.current_piece.color
+            
+            if player.change_piece:
+                to_pop = {}
+                terminated = False
+                for pos in player.current_piece.current_shape:
+                    print(pos)
+                    print("shape ID: ", player.current_piece.shape_id)
+                    print("shape points: ", player.current_piece.current_shape)
+                    print("orientation: ", player.current_piece.orientation)
+
+                    if player.locked_positions[pos[1]][pos[0]] != (0,0,0):
+                        ge[index].fitness -= 1
+                        dead_nets.add(index)
+                        terminated = True
+                    else:
+                        player.locked_positions[pos[1]][pos[0]] = player.current_piece.color
+                    y = pos[1]
+                    if (0,0,0) not in player.locked_positions[y]:
+                        to_pop[y] = 1
+
+                if not terminated:
+                    # print(ge, index)
+                    ge[index].fitness += 5
+                    popcorn = []
+                    for key in to_pop.keys():
+                        popcorn.append(key)
+                    popcorn.sort()
+                    popcorn.reverse()
+
+                    player.score += (point_key[len(popcorn)] * player.level)
+                    ge[index].fitness += point_key[len(popcorn)] * player.level
+
+                    player.score += (piece_point_val * player.level)
+                    ge[index].fitness += piece_point_val * player.level
+
+                    player.lines_cleared += len(popcorn)
+                    ge[index].fitness += len(popcorn) * 50
+                    player.level = player.lines_cleared // 5 + 1
 
 
-def main_menu():
-    win = pygame.display.set_mode((screen_width, screen_height))
-    pygame.display.set_caption('Tetris')
-    score = main(win, 0)
-    print(score)
+                    for pop_index in popcorn:
+                        player.locked_positions.pop(pop_index)
+                    for _ in popcorn:
+                        player.locked_positions.insert(0, [(0,0,0) for _ in range(10)])
 
+                    player.current_piece = player.next_piece
+                    player.next_piece = get_shape()
+                    player.change_piece = False
+            
+            if index == 0:
+                draw_window(win, player.grid, player.score)
+            pygame.display.update()
+        
+        dead_nets = sorted(dead_nets)
+        dead_nets.reverse()
+        for ind in dead_nets:
+            # print(dead_nets)
+            # print("pop index: " + str(ind))
+            # print("players: ", players)
+            players.pop(ind)
+            ge.pop(ind)
+            nets.pop(ind)
+
+
+def run(configuration_file_path):
+    config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
+                         neat.DefaultSpeciesSet, neat.DefaultStagnation, configuration_file_path)
+    p = neat.Population(config)
+
+    # reporters, possibly remove later
+    p.add_reporter(neat.StdOutReporter(True))
+    # p.add_reporter(neat.StatisticsReporter(True))
+
+    chicken_dinner = p.run(main, 50)
+    # import pickle
+    # with open('model_pickle_solo','wb') as f:
+    #     pickle.dump(chicken_dinner, f)
 
 if __name__ == "__main__":
-    # win = pygame.display.set_mode((screen_width, screen_height))
-    # pygame.display.set_caption('Tetris')
-    main_menu()
+    local_directory = os.path.dirname(__file__)
+    configuration_file_path = os.path.join(local_directory, "config_solo.txt")
+    run(configuration_file_path)

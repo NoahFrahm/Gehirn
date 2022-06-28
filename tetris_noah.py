@@ -124,19 +124,37 @@ class GamePiece:
         return False
 
 
-    def inBounds(self, grid, shape) -> bool:
+    # def inBounds(self, grid, shape) -> bool:
+    #     """makes sure that a given x,y is valid for game bounds"""
+    #     # we grab all tiles that do not have shapes on them
+    #     accepted_pos = [[(j,i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
+    #     accepted_pos = [j for sub in accepted_pos for j in sub]
+    #     # add check for no collision on grid
+       
+    #     for point in shape:
+    #         if point not in accepted_pos:
+    #             # for when we start off screen shape we are good so only > -1
+    #             if point[1] > -1 or point[0] < 0 or point[1] > 9:
+    #                 return False
+    #     return True
+
+    def inBounds(grid, shape) -> bool:
         """makes sure that a given x,y is valid for game bounds"""
         # we grab all tiles that do not have shapes on them
         accepted_pos = [[(j,i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
+        # for row in accepted_pos:
+        #     print(row)
         accepted_pos = [j for sub in accepted_pos for j in sub]
+        # print(accepted_pos)
         # add check for no collision on grid
        
         for point in shape:
             if point not in accepted_pos:
+                print(point)
                 # for when we start off screen shape we are good so only > -1
-                if point[1] > -1:
+                if point[1] > -1 or point[0] < 0 or point[0] > 9:
                     return False
-        return True  
+        return True    
 
 
 def create_grid(locked_positions = {}):
@@ -184,7 +202,7 @@ def draw_window(surface, grid, score):
 
 
 def get_shape():
-    ind = random.randint(0,len(shapes))
+    ind = random.randint(0,len(shapes)-1)
     return GamePiece(5, 0, ind, shapes[ind])
 
 
@@ -290,10 +308,16 @@ def main(win, score):
 
 
 def main_menu():
-    win = pygame.display.set_mode((screen_width, screen_height))
-    pygame.display.set_caption('Tetris')
-    score = main(win, 0)
-    print(score)
+    # win = pygame.display.set_mode((screen_width, screen_height))
+    # pygame.display.set_caption('Tetris')
+    # score = main(win, 0)
+    # print(score)
+    grid = [[(0,0,0) for _ in range(10)] for _ in range(20)]
+    shape = [(9, 0), (8, 0), (10, -1), (9, -1)]
+    # accepted_pos = [[(j,i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
+    # accepted_pos = [j for sub in accepted_pos for j in sub]
+
+    print(GamePiece.inBounds(grid, shape))
 
 
 if __name__ == "__main__":
