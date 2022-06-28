@@ -1,0 +1,55 @@
+
+
+
+population_size = 200
+generations = 200
+hidden_layers = 0
+input_size = 4
+end_fitness = 920
+
+##Increase hidden layers
+
+possible rule of thumb
+N -> hidden neurons
+1.) N = 2/3 * input
+2.) N < 2 * input
+
+1.)
+population_size = 200
+generations = 200
+hidden_layers = 2
+input_size = 4
+end_fitness = 
+
+2.)
+population_size = 200
+generations = 200
+hidden_layers = 6
+input_size = 4
+end_fitness = 
+
+
+##Increase input
+population_size = 200
+generations = 200
+hidden_layers = 0
+input_size = 204
+end_fitness = 
+
+
+
+##Increase population?
+population_size = 200
+generations = 200
+hidden_layers = 0
+input_size = 204
+end_fitness = 
+
+
+##combine best approaches
+
+
+
+
+
+

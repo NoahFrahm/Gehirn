@@ -198,12 +198,13 @@ class MyPlayer:
         self.grid = create_grid(self.locked_positions)
         self.change_piece = False
         self.run = True
-        self.clock = pygame.time.Clock()
         self.piece_count = 0
         self.lines_cleared = 0
         self.level = 1
         self.current_piece = get_shape()
         self.next_piece = get_shape()
+        self.frame = 0
+        self.clock = pygame.time.Clock()
         self.fall_time = 0
         self.score = 0
 
@@ -228,7 +229,7 @@ def main(genomes, config):
     print(len(ge))
     print("players: " + str(len(players)))
 
-    fall_speed = 0.01
+    fall_speed = 0.07
     piece_point_val = 2
     run = True
     point_key = {
@@ -253,11 +254,16 @@ def main(genomes, config):
 
             ge[index].fitness += 1
             player.grid = create_grid(player.locked_positions)
-            player.fall_time += player.clock.get_rawtime()
-            player.clock.tick()
+            
+            # player.fall_time += player.clock.get_rawtime()
+            # player.clock.tick()
 
-            if player.fall_time / 1000 > fall_speed:
-                player.fall_time = 0
+            # if player.fall_time  > fall_speed:
+            #     player.fall_time = 0
+            #     player.change_piece = player.current_piece.move("DOWN", player.grid)
+
+            if player.frame % 2 == 1:
+                # player.fall_time = 0
                 player.change_piece = player.current_piece.move("DOWN", player.grid)
             
             if not player.change_piece:
@@ -292,11 +298,10 @@ def main(genomes, config):
                 to_pop = {}
                 terminated = False
                 for pos in player.current_piece.current_shape:
-                    print(pos)
-                    print("shape ID: ", player.current_piece.shape_id)
-                    print("shape points: ", player.current_piece.current_shape)
-                    print("orientation: ", player.current_piece.orientation)
-
+                    # print(pos)
+                    # print("shape ID: ", player.current_piece.shape_id)
+                    # print("shape points: ", player.current_piece.current_shape)
+                    # print("orientation: ", player.current_piece.orientation)
                     if player.locked_positions[pos[1]][pos[0]] != (0,0,0):
                         ge[index].fitness -= 1
                         dead_nets.add(index)
@@ -308,7 +313,6 @@ def main(genomes, config):
                         to_pop[y] = 1
 
                 if not terminated:
-                    # print(ge, index)
                     ge[index].fitness += 5
                     popcorn = []
                     for key in to_pop.keys():
@@ -336,9 +340,10 @@ def main(genomes, config):
                     player.next_piece = get_shape()
                     player.change_piece = False
             
-            if index == 0:
-                draw_window(win, player.grid, player.score)
-            pygame.display.update()
+            player.frame += 1
+            # if index == 0:
+            #     draw_window(win, player.grid, player.score)
+            # pygame.display.update()
         
         dead_nets = sorted(dead_nets)
         dead_nets.reverse()
@@ -349,6 +354,7 @@ def main(genomes, config):
             players.pop(ind)
             ge.pop(ind)
             nets.pop(ind)
+        
 
 
 def run(configuration_file_path):
@@ -361,9 +367,9 @@ def run(configuration_file_path):
     # p.add_reporter(neat.StatisticsReporter(True))
 
     chicken_dinner = p.run(main, 50)
-    # import pickle
-    # with open('model_pickle_solo','wb') as f:
-    #     pickle.dump(chicken_dinner, f)
+    import pickle
+    with open('model_pickle_solo_1.0','wb') as f:
+        pickle.dump(chicken_dinner, f)
 
 if __name__ == "__main__":
     local_directory = os.path.dirname(__file__)
