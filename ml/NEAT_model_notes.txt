@@ -7,7 +7,8 @@ Inputs ->
 -locked status of all tiles (only tiles covered by old placed down tetriminos).
  this is a 10 X 20 grid, with four points being reserved for our current piece (these are considered unlocked) and the
  remaining points having a value of 0 as unlocked or 1 as locked
--points (our metric of success)
+
+
 
 Outputs -> 
 -key moves (UP, DOWN, LEFT, RIGHT)
@@ -22,6 +23,7 @@ Population size ->
 -100
 
 Fitness Function -> 
+-points (our metric of success)
 -points scored
   - placing a piece
   - clearing a line
@@ -30,13 +32,14 @@ Fitness Function ->
 
 Max generations ->
 -200
+-50
 
 
 Different Models ->
 -we will consider 3 training approaches for our model
   -the first will involve only passing in current piece data and nothing about the 
-  current state of the grid (what tiles are filled in)
-  -the second will involve  passing in piece data and next piece data
-  -the third will pass in current piece, next piece, and grid state
+  current state of the grid (what tiles are filled in, this is 2 input neurons)
+  -the second will involve  passing in piece data and next piece data (this is 4 input neurons)
+  -the third will pass in current piece, next piece, and grid state (this is 204 input neurons)
 
 TODO: figure out our population size and max generations
