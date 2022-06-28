@@ -249,8 +249,7 @@ def main(genomes, config):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
-                    break
-                break
+                    raise Exception
 
             ge[index].fitness += 1
             player.grid = create_grid(player.locked_positions)

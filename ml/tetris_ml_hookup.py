@@ -68,13 +68,10 @@ def main(genomes, config):
                 player.fall_time = 0
                 player.change_piece = player.current_piece.move("DOWN", player.grid)
                     
-
-            # moving our bird with neural network
-            # position of our piece
-            # piece_coors = ()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
+                    raise Exception
 
             # locked tiles data
             locked_data = tuple(0 if player.locked_positions[y][x] == (0,0,0) else 1 for x in range(10) for y in range(20))
