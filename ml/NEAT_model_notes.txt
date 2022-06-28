@@ -2,19 +2,19 @@
 Inputs ->
 -key inputs (UP, DOWN, LEFT, RIGHT)
 -current piece (there are seven possible tetriminos)
+  - each with 4 rotations
 -next piece (seven possible pieces)
 -locked status of all tiles (only tiles covered by old placed down tetriminos).
  this is a 10 X 20 grid, with four points being reserved for our current piece (these are considered unlocked) and the
  remaining points having a value of 0 as unlocked or 1 as locked
 -points (our metric of success)
 
-
 Outputs -> 
 -key moves (UP, DOWN, LEFT, RIGHT)
 
 Activation Function ->
 -play around with different activation functions and document results
--tanh or sigmoid (since we are using a Recurrent neural network)
+-tanh or sigmoid (since we are using a ___ neural network?)
 
 Population size ->
 -10
@@ -23,6 +23,20 @@ Population size ->
 
 Fitness Function -> 
 -points scored
+  - placing a piece
+  - clearing a line
+  - suriving longer/getting to higher levels (higher levels automatically create score multiplier)
+
 
 Max generations ->
 -200
+
+
+Different Models ->
+-we will consider 3 training approaches for our model
+  -the first will involve only passing in current piece data and nothing about the 
+  current state of the grid (what tiles are filled in)
+  -the second will involve  passing in piece data and next piece data
+  -the third will pass in current piece, next piece, and grid state
+
+TODO: figure out our population size and max generations
