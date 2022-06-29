@@ -54,6 +54,13 @@ end_fitness =
 gen 116 we jump to 1098
 gen 160 we get 1182
 
+##trial 2 more hidden layers
+population_size = 100
+generations = 200
+hidden_layers = 50
+input_size = 204
+end_fitness = 
+
 
 ##combine best approaches
 
