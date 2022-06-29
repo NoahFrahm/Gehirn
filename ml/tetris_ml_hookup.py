@@ -145,7 +145,11 @@ def create_grid(locked_positions = {}):
     return grid
     
 
-def get_shape():
+def get_shape(num):
+    random.seed(711)
+    while num > 0:
+        _ = random.randint(0,len(shapes)-1)
+        num -= 1
     ind = random.randint(0,len(shapes)-1)
     return GamePiece(5, 0, ind, shapes[ind])
 
@@ -158,11 +162,12 @@ class MyPlayer:
         self.piece_count = 0
         self.lines_cleared = 0
         self.level = 1
-        self.current_piece = get_shape()
-        self.next_piece = get_shape()
+        self.current_piece = get_shape(self.piece_count)
+        self.next_piece = get_shape(self.piece_count + 1)
         self.frame = 0
         self.score = 0
-
+    
+    
 
 def main(genomes, config):
     
@@ -214,12 +219,12 @@ def main(genomes, config):
                 player.change_piece = player.current_piece.move("DOWN", player.grid)
             
             if not player.change_piece:
-                # locked_data = tuple(0 if player.locked_positions[y][x] == (0,0,0) else 1 for x in range(10) for y in range(20))
+                locked_data = tuple(0 if player.locked_positions[y][x] == (0,0,0) else 1 for x in range(10) for y in range(20))
                 shape = player.current_piece.shape_id + 1
                 orientation = player.current_piece.orientation + 1
                 next_shape = player.next_piece.shape_id + 1
                 next_orientation = player.next_piece.orientation + 1
-                data = (shape, orientation, next_shape, next_orientation) #  + locked_data
+                data = (shape, orientation, next_shape, next_orientation) + locked_data
                 
                 output = nets[index].activate(data)
                 max_val_index, maxi = 0, 0
@@ -278,8 +283,10 @@ def main(genomes, config):
                     for _ in popcorn:
                         player.locked_positions.insert(0, [(0,0,0) for _ in range(10)])
 
+                    
                     player.current_piece = player.next_piece
-                    player.next_piece = get_shape()
+                    player.piece_count += 1
+                    player.next_piece = get_shape(player.piece_count + 1)
                     player.change_piece = False
             
             player.frame += 1

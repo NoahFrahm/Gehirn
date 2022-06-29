@@ -42,4 +42,11 @@ Different Models ->
   -the second will involve  passing in piece data and next piece data (this is 4 input neurons)
   -the third will pass in current piece, next piece, and grid state (this is 204 input neurons)
 
+
+
+Notes
+- making sure training used same random seed improved model greatly
+- should make piece fitness boost constant and emphasize line clears as high value
+- add hidden nodes
+
 TODO: figure out our population size and max generations

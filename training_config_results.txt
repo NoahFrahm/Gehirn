@@ -19,7 +19,7 @@ population_size = 200
 generations = 200
 hidden_layers = 2
 input_size = 4
-end_fitness = 
+end_fitness = 749
 
 2.)
 population_size = 200
@@ -30,20 +30,29 @@ end_fitness =
 
 
 ##Increase input
-population_size = 200
+population_size = 50
 generations = 200
-hidden_layers = 0
+hidden_layers = 50
 input_size = 204
 end_fitness = 
 
-
-
-##Increase population?
 population_size = 200
 generations = 200
-hidden_layers = 0
+hidden_layers = 2
+input_size = 204
+end_fitness = 1011
+
+
+
+##made sure to use fixed seed for piece generation
+population_size = 200
+generations = 200
+hidden_layers = 2
 input_size = 204
 end_fitness = 
+1023 from around round 80+ no change
+gen 116 we jump to 1098
+gen 160 we get 1182
 
 
 ##combine best approaches
