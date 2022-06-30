@@ -171,8 +171,8 @@ class MyPlayer:
 
 def main(genomes, config):
     
-    win = pygame.display.set_mode((screen_width, screen_height))
-    pygame.display.set_caption('Tetris')
+    # win = pygame.display.set_mode((screen_width, screen_height))
+    # pygame.display.set_caption('Tetris')
 
     nets: List[neat.nn.FeedForwardNetwork] = []
     ge: List[neat.DefaultGenome] = []
@@ -207,14 +207,14 @@ def main(genomes, config):
             break
         
         for index, player in enumerate(players):
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-                    break
-                    # raise Exception
+            # for event in pygame.event.get():
+            #     if event.type == pygame.QUIT:
+            #         run = False
+            #         break
+            #         # raise Exception
             if not run: break
 
-            ge[index].fitness += 1
+            # ge[index].fitness += 1
             player.grid = create_grid(player.locked_positions)
 
             if player.frame % 2 == 1:
@@ -253,7 +253,7 @@ def main(genomes, config):
                 terminated = False
                 for pos in player.current_piece.current_shape:
                     if player.locked_positions[pos[1]][pos[0]] != (0,0,0):
-                        ge[index].fitness -= 1
+                        ge[index].fitness -= 10
                         dead_nets.add(index)
                         terminated = True
                     else:
@@ -263,7 +263,7 @@ def main(genomes, config):
                         to_pop[y] = 1
 
                 if not terminated:
-                    ge[index].fitness += 5
+                    ge[index].fitness += 1
                     popcorn = []
                     for key in to_pop.keys():
                         popcorn.append(key)
@@ -277,7 +277,6 @@ def main(genomes, config):
                     ge[index].fitness += piece_point_val * player.level
 
                     player.lines_cleared += len(popcorn)
-                    ge[index].fitness += len(popcorn) * 50
                     player.level = player.lines_cleared // 5 + 1
 
                     for pop_index in popcorn:
