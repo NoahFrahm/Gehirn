@@ -104,8 +104,21 @@ population_size = 200
 generations = 200
 hidden_layers = 0
 input_size = 206
-end_fitness = 
+end_fitness = 481.5
 
+population_size = 200
+generations = 200
+hidden_layers = 10
+input_size = 206
+end_fitness = 419.7
+
+
+##best approaches
+population_size = 300
+generations = 400
+hidden_layers = 0
+input_size = 206
+end_fitness = 673.9
 
 
 

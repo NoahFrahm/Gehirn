@@ -39,4 +39,4 @@ trianing used the same random seed for piece generation. this furthermore improv
                     3:300,
                     4:1200,}
 
-
+-after running trials again with new improved fitness function it seems that the models with zero hidden nodes have had better performance compared to those wit h 2 or 10

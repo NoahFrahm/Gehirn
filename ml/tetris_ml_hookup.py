@@ -312,7 +312,7 @@ def run(configuration_file_path):
     p.add_reporter(neat.StdOutReporter(True))
     # p.add_reporter(neat.StatisticsReporter(True))
 
-    chicken_dinner = p.run(main, 200)
+    chicken_dinner = p.run(main, 400)
     import pickle
     with open('model_pickle_solo_1.0','wb') as f:
         pickle.dump(chicken_dinner, f)
