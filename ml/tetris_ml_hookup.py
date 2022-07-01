@@ -189,8 +189,7 @@ def main(genomes, config):
     print(len(ge))
     print("players: " + str(len(players)))
 
-    fall_speed = 0.07
-    piece_point_val = 2
+    piece_point_val = 8 #2
     run = True
     point_key = {
         0:0,
@@ -226,7 +225,10 @@ def main(genomes, config):
                 orientation = player.current_piece.orientation + 1
                 next_shape = player.next_piece.shape_id + 1
                 next_orientation = player.next_piece.orientation + 1
-                data = (shape, orientation, next_shape, next_orientation) + locked_data
+                cur_x = player.current_piece.x
+                cur_y = player.current_piece.y
+                data = (shape, orientation, next_shape, next_orientation, cur_x, cur_y) + locked_data
+                # (shape, orientation, next_shape, next_orientation)
                 
                 output = nets[index].activate(data)
                 max_val_index, maxi = 0, 0
@@ -263,7 +265,7 @@ def main(genomes, config):
                         to_pop[y] = 1
 
                 if not terminated:
-                    ge[index].fitness += 1
+                    ge[index].fitness += 0.1
                     popcorn = []
                     for key in to_pop.keys():
                         popcorn.append(key)

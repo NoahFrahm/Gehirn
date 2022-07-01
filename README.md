@@ -17,6 +17,7 @@ trianing used the same random seed for piece generation. this furthermore improv
 -adding hidden nodes severly increase the run time
 
 -to further improveme the model, the fitness function was re-evaluated
+
     -how old fitness was decided
         -1 fitness point for every move the player makes without losing/causing game to end
         -(-1) fitness for ending the game
@@ -29,9 +30,9 @@ trianing used the same random seed for piece generation. this furthermore improv
         -20 * level_multiplier for a sucessful piece placement
 
     -new fitness
-        -1 point for every move without ending the game
+        -0.1 point for every move without ending the game
         -(-10) points for losing game
-        -5 * level_multiplier points for every sucessful piece placement
+        -8 * level_multiplier points for every sucessful piece placement
         -lines_cleared * level_multiplier points for a line clear using the following dict where key = lines cleared and value = points awarded
             dict = {1:40,
                     2:100,

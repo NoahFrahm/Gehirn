@@ -65,12 +65,13 @@ end_fitness =
 ## new fitness function trainings
 
 ##only current piece and next piece info (piece, orientation)
-3-5 seconds per generation
+2-5 seconds per generation
 population_size = 200
 generations = 200
 hidden_layers = 0
 input_size = 4
-end_fitness = 227
+end_fitness = 345
+old 227
 
 ##includes the grid tile statuses
 8-20 seconds per generation
@@ -78,19 +79,30 @@ population_size = 200
 generations = 200
 hidden_layers = 0
 input_size = 204
-end_fitness = 241
+end_fitness = 457.8
+old 241
 
-##includes 2 hidden nodes
+##includes 10 hidden nodes
+8-36 seconds per generation
 population_size = 100
 generations = 200
 hidden_layers = 10
 input_size = 204
-end_fitness = 
+end_fitness = 385
+
+
+18-50 seconds per generation
+population_size = 200
+generations = 200
+hidden_layers = 10
+input_size = 204
+end_fitness = 373.5
+
 
 ##including the current piece x and y coor
 population_size = 200
 generations = 200
-hidden_layers = 2
+hidden_layers = 0
 input_size = 206
 end_fitness = 
 
