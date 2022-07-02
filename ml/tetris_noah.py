@@ -138,7 +138,7 @@ class GamePiece:
     #                 return False
     #     return True
 
-    def inBounds(grid, shape) -> bool:
+    def inBounds(self, grid, shape) -> bool:
         """makes sure that a given x,y is valid for game bounds"""
         # we grab all tiles that do not have shapes on them
         accepted_pos = [[(j,i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
