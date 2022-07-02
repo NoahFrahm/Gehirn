@@ -170,10 +170,6 @@ class MyPlayer:
     
 
 def main(genomes, config):
-    
-    # win = pygame.display.set_mode((screen_width, screen_height))
-    # pygame.display.set_caption('Tetris')
-
     nets: List[neat.nn.FeedForwardNetwork] = []
     ge: List[neat.DefaultGenome] = []
     players: List[MyPlayer] = []
