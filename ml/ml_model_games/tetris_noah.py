@@ -123,34 +123,15 @@ class GamePiece:
             self.rotate(grid)
         return False
 
-
-    # def inBounds(self, grid, shape) -> bool:
-    #     """makes sure that a given x,y is valid for game bounds"""
-    #     # we grab all tiles that do not have shapes on them
-    #     accepted_pos = [[(j,i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
-    #     accepted_pos = [j for sub in accepted_pos for j in sub]
-    #     # add check for no collision on grid
-       
-    #     for point in shape:
-    #         if point not in accepted_pos:
-    #             # for when we start off screen shape we are good so only > -1
-    #             if point[1] > -1 or point[0] < 0 or point[1] > 9:
-    #                 return False
-    #     return True
-
     def inBounds(self, grid, shape) -> bool:
         """makes sure that a given x,y is valid for game bounds"""
         # we grab all tiles that do not have shapes on them
         accepted_pos = [[(j,i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
-        # for row in accepted_pos:
-        #     print(row)
         accepted_pos = [j for sub in accepted_pos for j in sub]
-        # print(accepted_pos)
-        # add check for no collision on grid
        
         for point in shape:
             if point not in accepted_pos:
-                print(point)
+                # print(point)
                 # for when we start off screen shape we are good so only > -1
                 if point[1] > -1 or point[0] < 0 or point[0] > 9:
                     return False
