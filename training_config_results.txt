@@ -112,6 +112,20 @@ hidden_layers = 10
 input_size = 206
 end_fitness = 419.7
 
+#different activation function (added tanh as an option of activation, default still relu)
+population_size = 200
+generations = 200
+hidden_layers = 10
+input_size = 206
+end_fitness = 419.7
+
+#remove info about next piece but keep x and y of current
+population_size = 200
+generations = 200
+hidden_layers = 10
+input_size = 206
+end_fitness = 419.7
+
 
 ##best approaches
 population_size = 300
@@ -119,9 +133,7 @@ generations = 400
 hidden_layers = 0
 input_size = 206
 end_fitness = 673.9
-
-
-
+leveled out with no improvment at around 300
 
 
 
