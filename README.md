@@ -2,7 +2,7 @@
 
 Python Tetris with a twist.
 
-Table of Contents
+#Table of Contents
 --[Model training and display code](https://github.com/NoahFrahm/Gehirn/tree/master/ml/ml_model_games)
   - [playable tetris game](https://github.com/NoahFrahm/Gehirn/blob/master/ml/ml_model_games/tetris_noah.py)
   - [NEAT Training file that also renders UI of the games being played](https://github.com/NoahFrahm/Gehirn/blob/master/ml/ml_model_games/displayed_NEAT_ml.py)
