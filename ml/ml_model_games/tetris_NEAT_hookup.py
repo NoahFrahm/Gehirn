@@ -156,6 +156,7 @@ def get_shape(num):
     ind = random.randint(0,len(shapes)-1)
     return GamePiece(5, 0, ind, shapes[ind])
 
+
 class MyPlayer:
     def __init__(self) -> None:
         self.locked_positions = [[(0,0,0) for _ in range(10)] for _ in range(20)]
