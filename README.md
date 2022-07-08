@@ -16,4 +16,4 @@ Python Tetris with a twist.
 ### Notes
   - [Planning file for model parameters](https://github.com/NoahFrahm/Gehirn/blob/master/Notes/NEAT_model_notes.txt)
   - [Results of different training configurations](https://github.com/NoahFrahm/Gehirn/blob/master/Notes/NEAT_training_config_results.txt)
-  - [Project progress](https://github.com/NoahFrahm/Gehirn/blob/master/Notes/porject_progress.txt)
+  - [Project progress](https://github.com/NoahFrahm/Gehirn/blob/master/Notes/project_progress.txt)
