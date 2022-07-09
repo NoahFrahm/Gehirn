@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/Users/noahfrahm/Library/Mobile Documents/com~apple~CloudDocs/VScode workspaces/Gehirn/')
 
 import os
 import pygame
@@ -145,8 +147,7 @@ def main_menu(configuration_file_path):
                          neat.DefaultSpeciesSet, neat.DefaultStagnation, configuration_file_path)
     
     import pickle
-    model_path = '/Users/noahfrahm/Library/Mobile Documents/com~apple~CloudDocs/VScode workspaces/Gehirn/models/two04in_4out.0'
-    # '/Users/noahfrahm/Library/Mobile Documents/com~apple~CloudDocs/VScode workspaces/Gehirn/models/four_input_0_hidden'
+    model_path = '/Users/noahfrahm/Library/Mobile Documents/com~apple~CloudDocs/VScode workspaces/Gehirn/models/NEAT models/two04in_4out.0'
     with open(model_path,'rb') as f:
         model = pickle.load(f)    
     genomes = [(1, model)]

@@ -1,7 +1,11 @@
+import sys
+sys.path.append('/Users/noahfrahm/Library/Mobile Documents/com~apple~CloudDocs/VScode workspaces/Gehirn/')
+
 import os
 import random
 from typing import List, Tuple
 import neat
+
 from tetris_noah import shapes, create_grid, GamePiece
 
 
@@ -254,7 +258,7 @@ def main(genomes, config):
                 terminated = False
                 for pos in player.current_piece.current_shape:
                     if player.locked_positions[pos[1]][pos[0]] != (0,0,0):
-                        ge[index].fitness -= 10
+                        ge[index].fitness -= 60
                         dead_nets.add(index)
                         terminated = True
                     else:

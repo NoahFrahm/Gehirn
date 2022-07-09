@@ -35,3 +35,9 @@ trianing used the same random seed for piece generation. this furthermore improv
                     4:1200,}
 
 -after running trials again with new improved fitness function it seems that the models with zero hidden nodes have had better performance compared to those wit h 2 or 10
+-updated fitness function to do -60 on game end
+
+
+- pytorch
+- check gpu usage of neat what does neat use how can it be leveraged on aws 
+- 
