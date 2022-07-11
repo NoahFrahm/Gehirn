@@ -1,0 +1,2 @@
+youtube tutorial for pytorch
+https://www.youtube.com/watch?v=L8ypSXwyBds

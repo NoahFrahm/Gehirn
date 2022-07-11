@@ -9,6 +9,14 @@ import neat
 from tetris_noah import shapes, create_grid, GamePiece
 
 
+
+def get_shape(num):
+        random.seed(711)
+        while num > 0:
+            _ = random.randint(0,len(shapes)-1)
+            num -= 1
+        ind = random.randint(0,len(shapes)-1)
+        return GamePiece(5, 0, ind, shapes[ind])
 class TetrisGame:
 
     piece_point_val = 8 #2
@@ -24,13 +32,13 @@ class TetrisGame:
         self.player = MyPlayer()
     
 
-    def get_shape(self, num):
-        random.seed(711)
-        while num > 0:
-            _ = random.randint(0,len(shapes)-1)
-            num -= 1
-        ind = random.randint(0,len(shapes)-1)
-        return GamePiece(5, 0, ind, shapes[ind])
+    # def get_shape(self, num):
+    #     random.seed(711)
+    #     while num > 0:
+    #         _ = random.randint(0,len(shapes)-1)
+    #         num -= 1
+    #     ind = random.randint(0,len(shapes)-1)
+    #     return GamePiece(5, 0, ind, shapes[ind])
 
 
     def get_state(self):
@@ -107,7 +115,7 @@ class TetrisGame:
                 
                 self.player.current_piece = self.player.next_piece
                 self.player.piece_count += 1
-                self.player.next_piece = self.get_shape(self.player.piece_count + 1)
+                self.player.next_piece = get_shape(self.player.piece_count + 1)
                 self.player.change_piece = False
         
         self.player.frame += 1
@@ -130,8 +138,8 @@ class MyPlayer:
         self.score = 0
     
 
-def train():
-    ...
+# def train():
+#     ...
     # config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
     #                      neat.DefaultSpeciesSet, neat.DefaultStagnation, configuration_file_path)
     # p = neat.Population(config)
@@ -147,7 +155,8 @@ def train():
 
 
 if __name__ == "__main__":
-    train()
+    # train()
+    ...
     # config_path = '/Users/noahfrahm/Library/Mobile Documents/com~apple~CloudDocs/VScode workspaces/Gehirn/ml/config_files/config_solo.txt'
     # local_directory = os.path.dirname(__file__)
     # configuration_file_path = os.path.join(local_directory, config_path)
