@@ -40,4 +40,4 @@ trianing used the same random seed for piece generation. this furthermore improv
 
 - pytorch
 - check gpu usage of neat what does neat use how can it be leveraged on aws 
-- 
+- current neat library does no support gpu usage severly slowing the training of our model. It with the number of input variables it is too large to cost effectivley run using cloud computing with as many vCPUs as possible and also not feasible to run on a local machine. will look into using cloud computing for pytorch approach
