@@ -5,10 +5,10 @@ Python Tetris with a twist.
 # Table of Contents
 <!-- toc -->
 ### Model Training and Display Code [](https://github.com/NoahFrahm/Gehirn/tree/master/ml/ml_model_games)
-  - [Playable tetris game](https://github.com/NoahFrahm/Gehirn/blob/master/ml/ml_model_games/tetris_noah.py)
-  - [NEAT Training file that also renders UI of the games being played](https://github.com/NoahFrahm/Gehirn/blob/master/ml/ml_model_games/displayed_NEAT_ml.py)
-  - [NEAT Training file without any UI](https://github.com/NoahFrahm/Gehirn/blob/master/ml/ml_model_games/tetris_NEAT_hookup.py)
-  - [File that runs trained NEAT model with tetris UI](https://github.com/NoahFrahm/Gehirn/blob/master/ml/ml_model_games/display_trained_model.py)
+  - [Playable tetris game](https://github.com/NoahFrahm/Gehirn/blob/master/tetris_noah.py)
+  - [NEAT Training file that also renders UI of the games being played](https://github.com/NoahFrahm/Gehirn/blob/master/ml/ml_training/NEAT/displayed_NEAT_ml.py)
+  - [NEAT Training file without any UI](https://github.com/NoahFrahm/Gehirn/blob/master/ml/ml_training/NEAT/tetris_NEAT_hookup.py)
+  - [File that runs trained NEAT model with tetris UI](https://github.com/NoahFrahm/Gehirn/blob/master/ml/ml_training/NEAT/display_trained_model.py)
  
 ### Models
   - [Trained NEAT Models](https://github.com/NoahFrahm/Gehirn/tree/master/models/NEAT%20models)
