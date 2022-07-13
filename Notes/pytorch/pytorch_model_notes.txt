@@ -1,0 +1,142 @@
+
+
+learning rate = 0.001
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 1 hidden layer with 132, 4 out
+hidden = 132
+input = 206
+output = 4
+bestscore = 120
+
+##no hidden
+learning rate = 0.001
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 4 out
+hidden = 0
+input = 206
+output = 4
+bestscore = 
+
+##increase random exploration by changing epsilon to = 200 - self.n_games from 80 - self.n_games
+learning rate = 0.001
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 1 hidden layer with 132, 4 out
+hidden = 132
+input = 206
+output = 4
+bestscore = 128
+
+##less hidden 
+learning rate = 0.001
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 1 hidden layer with 80, 4 out
+hidden = 80
+input = 206
+output = 4
+bestscore = 120
+
+##hidden = 2/3 * input
+learning rate = 0.001
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 1 hidden layer with 132, 4 out
+hidden = 140 (from 137 + 3)
+input = 206
+output = 4
+bestscore = 
+
+##hidden = 2/3 * input and additional layer
+learning rate = 0.001
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 1 hidden layer with 132, 4 out
+hidden = 140 (from 137 + 3)
+input = 206
+output = 4
+bestscore = 
+
+## learning rate increase epsilon to = 150 - self.n_games
+learning rate = 0.05
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 1 hidden layer with 132, 4 out
+hidden = 140 (from 137 + 3)
+input = 206
+output = 4
+bestscore = 128
+
+## learning rate increase epsilon to = 150 - self.n_games
+learning rate = 0.4
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 1 hidden layer with 132, 4 out
+hidden = 140 (from 137 + 3)
+input = 206
+output = 4
+bestscore = 128
+
+## learning rate increase epsilon to = 150 - self.n_games
+learning rate = 0.9
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 1 hidden layer with 132, 4 out
+hidden = 140 (from 137 + 3)
+input = 206
+output = 4
+bestscore = 184
+
+## learning rate increase epsilon to = 150 - self.n_games
+learning rate = 0.6
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 1 hidden layer with 140, 4 out
+hidden = 140 (from 137 + 3)
+input = 206
+output = 4
+bestscore = 184
+
+
+##hidden = 2/3 * input and additional layer epsilon to = 100 - self.n_games
+## learning rate increase
+learning rate = 0.6
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 2 hidden layer with 140, 4 out
+hidden = 140 (from 137 + 3)
+input = 206
+output = 4
+bestscore = 120
+
+##DeepQnet
+learning rate = 0.001
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 1 hidden layer with 140, 4 out
+hidden = 140
+input = 206
+output = 4
+bestscore = 120
+
+##DeepQnet
+learning rate = 0.2
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 1 hidden layer with 140, 4 out
+hidden = 140
+input = 206
+output = 4
+bestscore = 120
+
+##DeepQnet
+learning rate = 0.9
+gamma = 0.9
+epsilon = 0
+network architecture = 206 in, 1 hidden layer with 140, 4 out
+hidden = 140
+input = 206
+output = 4
+bestscore = 

@@ -4,6 +4,8 @@ import torch.optim as optim
 import torch.nn.functional as F
 import os
 
+"""code is built from video tutorial mentioned in reference mat links file"""
+
 
 class Linear_QNet(nn.Module):
     # we want to configure our model params here
@@ -11,7 +13,8 @@ class Linear_QNet(nn.Module):
         super().__init__()
         # for tetris we should experiment with more layers here
         self.linear1 = nn.Linear(input_size, hidden_size)
-        self.linear2 = nn.Linear(hidden_size, output_size)
+        self.linear2 = nn.Linear(hidden_size, hidden_size)
+        self.linear3 = nn.Linear(hidden_size, output_size)
 
     def forward(self, x):
         # here x is our tensor, relu activation is good for this case with feed forward structure
@@ -19,15 +22,46 @@ class Linear_QNet(nn.Module):
         x = self.linear2(x)
         return x
 
-    def save(self, file_name='model.pth'):
+    def save(self, file_name='pytorch_model.pth'):
         # saves our model in specified folder, if it doesn't exist we create it
-        model_folder_path = './model'
+        model_folder_path = './models'
         if not os.path.exists(model_folder_path):
             os.makedirs(model_folder_path)
 
         file_name = os.path.join(model_folder_path, file_name)
         torch.save(self.state_dict(), file_name)
 
+class DeepQNetwork(nn.Module):
+    """slightly modified from github project by uvipen"""
+    def __init__(self, input_size, hidden_size, output_size):
+        super(DeepQNetwork, self).__init__()
+        self.conv1 = nn.Sequential(nn.Linear(input_size, hidden_size), nn.ReLU(inplace=True))
+        self.conv2 = nn.Sequential(nn.Linear(hidden_size, hidden_size), nn.ReLU(inplace=True))
+        self.conv3 = nn.Sequential(nn.Linear(hidden_size, output_size))
+
+        self._create_weights()
+
+    def _create_weights(self):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                nn.init.xavier_uniform_(m.weight)
+                nn.init.constant_(m.bias, 0)
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = self.conv3(x)
+        return x
+
+    def save(self, file_name='pytorch_model.pth'):
+            # saves our model in specified folder, if it doesn't exist we create it
+            model_folder_path = './models'
+            if not os.path.exists(model_folder_path):
+                os.makedirs(model_folder_path)
+
+            file_name = os.path.join(model_folder_path, file_name)
+            torch.save(self.state_dict(), file_name)
+ 
 
 class QTrainer:
     def __init__(self, model, lr, gamma):

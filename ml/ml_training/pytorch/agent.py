@@ -2,17 +2,18 @@ import torch
 import random
 import numpy as np
 from collections import deque
-from pytorch_model import Linear_QNet, QTrainer
+from pytorch_model import Linear_QNet, QTrainer, DeepQNetwork
 from tetris_pytorch import TetrisGame
 from display_stats import plot
 
 MAX_MEMORY = 100_000
 BATCH_SIZE = 1000
-LR = 0.001
+LR = 0.9
 
 INPUT_SIZE = 206
 OUTPUT_SIZE = 4
-HIDDEN_SIZE = 132
+HIDDEN_SIZE = 140
+EPSILON_COEF = 100
 
 class Agent:
 
@@ -21,7 +22,8 @@ class Agent:
         self.epsilon = 0 # randomness
         self.gamma = 0.9 # discount rate
         self.memory = deque(maxlen=MAX_MEMORY) # popleft()
-        self.model = Linear_QNet(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE)
+        self.model = DeepQNetwork(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE)
+        # Linear_QNet(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE)
         self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
     
     def remember(self, state, action, reward, next_state, done):
@@ -46,7 +48,7 @@ class Agent:
 
     def get_move(self, state):
         # random moves: tradeoff exploration / exploitation
-        self.epsilon = 80 - self.n_games
+        self.epsilon = EPSILON_COEF - self.n_games
         final_move = 0
         if random.randint(0, 200) < self.epsilon:
             move = random.randint(0, 3)
