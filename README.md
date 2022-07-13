@@ -2,6 +2,10 @@
 
 Learning to play tetris in Python using NEAT, Deep-Q networks, and Linear-Q networks. The best approach so far has been to use NEAT, but the current Python library does not support GPU usage and this severly hinders the training speed. This personal project is a work in progress and is intended as a way to explore machine learning outside of a classroom environment.
 
+###Machine Learning Libraries
+  - Pytorch
+  - Neat
+
 # Table of Contents
 <!-- toc -->
 ### Model Training and Display Code [](https://github.com/NoahFrahm/Gehirn/tree/master/ml/ml_model_games)
