@@ -7,6 +7,7 @@ from typing import List, Tuple
 import neat
 
 from tetris_noah import shapes, create_grid, GamePiece
+from modified_checkpoint import CheckpointerNoah
 
 
 def get_shape(num):
@@ -162,23 +163,31 @@ def main(genomes, config):
             nets.pop(ind)
         
 
-def run(configuration_file_path):
+def runy(configuration_file_path):
+    # we load a past model if it exists
+    check_point_file_path = '/Users/noahfrahm/Library/Mobile Documents/com~apple~CloudDocs/VScode workspaces/Gehirn/neat-checkpoint-777'
+    checkpoint_file_name = 'neat-checkpoint-777'
+    checkpoint_file_name_prefix = 'neat-checkpoint-'
+    if os.stat(check_point_file_path).st_size > 0:
+        p = neat.Checkpointer.restore_checkpoint(checkpoint_file_name)
+
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation, configuration_file_path)
     p = neat.Population(config)
 
     # reporters, possibly remove later
     p.add_reporter(neat.StdOutReporter(True))
+    p.add_reporter(CheckpointerNoah(generation_interval = 1, filename_prefix= checkpoint_file_name_prefix))
     # p.add_reporter(neat.StatisticsReporter(True))
 
-    chicken_dinner = p.run(main, 200)
-    import pickle
-    with open('model_pickle_solo_1.0','wb') as f:
-        pickle.dump(chicken_dinner, f)
+    chicken_dinner = p.run(main, 20)
+    # import pickle
+    # with open('checkpoint_neat_1.0','wb') as f:
+    #     pickle.dump(chicken_dinner, f)
 
 
 if __name__ == "__main__":
     config_path = '/Users/noahfrahm/Library/Mobile Documents/com~apple~CloudDocs/VScode workspaces/Gehirn/ml/config_files/config_solo.txt'
     local_directory = os.path.dirname(__file__)
     configuration_file_path = os.path.join(local_directory, config_path)
-    run(configuration_file_path)
+    runy(configuration_file_path)
